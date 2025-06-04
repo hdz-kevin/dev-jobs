@@ -20,7 +20,7 @@
 
     <!-- User Role -->
     <div class="mt-4">
-      <x-input-label for="email" :value="__('Choose your role in DevJobs')" />
+      <x-input-label for="role" :value="__('Choose your role in DevJobs')" />
       
       <select
         name="role"
