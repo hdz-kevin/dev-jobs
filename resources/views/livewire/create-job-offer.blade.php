@@ -1,11 +1,11 @@
-<form class="md:w-1/2 space-y-5" wire:submit.prevent="storeJobOffer">
+<form class="md:w-1/2 space-y-5" wire:submit="storeJobOffer">
   {{-- Title --}}
   <div>
     <x-input-label for="title" :value="__('Title')" />
     <x-text-input
       id="title"
       type="text"
-      wire:model.live="title"
+      wire:model.blur="title"
       :value="old('title')"
       autocomplete="title"
       autofocus
@@ -22,7 +22,7 @@
   <div>
     <x-input-label for="salary" :value="__('Monthly Salary')" />
     <select
-      wire:model.live="salary"
+      wire:model.blur="salary"
       id="salary"
       class="border-gray-300 focus:border-indigo-400 focus:ring-indigo-400 rounded-md shadow-sm w-full"
     >
@@ -42,7 +42,7 @@
     <x-input-label for="category" :value="__('Category')" />
     <select
       id="category"
-      wire:model.live="category"
+      wire:model.blur="category"
       class="border-gray-300 focus:border-indigo-400 focus:ring-indigo-400 rounded-md shadow-sm w-full"
     >
       <option value="">Choose Category</option>
@@ -63,7 +63,7 @@
     <x-text-input
       id="company"
       type="text"
-      wire:model.live="company"
+      wire:model.blur="company"
       :value="old('company')"
       autocomplete="company"
       placeholder="Ex. Netflix, Uber, Shopify" class="block mt-1 w-full"
@@ -80,7 +80,7 @@
     <x-text-input
       id="due_date"
       type="date"
-      wire:model.live="due_date"
+      wire:model.blur="due_date"
       :value="old('due_date')"
       class="block mt-1 w-full"
     />
@@ -96,7 +96,7 @@
 
     <textarea
       id="description"
-      wire:model.live="description"
+      wire:model.blur="description"
       placeholder="Job Description, experience"
       class="border-gray-300 focus:border-indigo-400 focus:ring-indigo-400 rounded-md shadow-sm w-full h-72">
     </textarea>
@@ -111,10 +111,18 @@
     <x-input-label for="image" :value="__('Image')" />
     <x-text-input 
       id="image"
-      wire:model.live="image"
+      wire:model="image"
       type="file"
+      accept="image/*"
       class="block mt-1 w-full"
     />
+
+    <div class="my-5 w-96">
+      @if ($image)
+        Image:
+        <img src="{{ $image->temporaryUrl() }}" alt="job offer image">
+      @endif
+    </div>
 
     @error('image')
       <x-single-input-error :message="$message" />

@@ -4,27 +4,28 @@ namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Salary;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CreateJobOffer extends Component
 {
+    use WithFileUploads;
+    
+    #[Validate('required|string')]
     public string $title;
+    #[Validate('required|string')]
     public string $salary;
+    #[Validate('required|string')]
     public string $category;
+    #[Validate('required|string')]
     public string $company;
+    #[Validate('required|string')]
     public string $due_date;
+    #[Validate('required|string')]
     public string $description;
+    #[Validate('required|image|max:2048')]
     public $image;
-
-    protected $rules = [
-        'title' => 'required|string',
-        'salary' => 'required|string',
-        'category' => 'required|string',
-        'company' => 'required|string',
-        'due_date' => 'required|string',
-        'description' => 'required|string',
-        'image' => 'required',
-    ];
 
     public function __construct() { }
 
