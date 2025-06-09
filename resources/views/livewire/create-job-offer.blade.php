@@ -1,4 +1,4 @@
-<form class="md:w-1/2 space-y-5" wire:submit="storeJobOffer">
+<form class="md:w-1/2 space-y-5" wire:submit="store">
   {{-- Title --}}
   <div>
     <x-input-label for="title" :value="__('Title')" />
@@ -20,10 +20,10 @@
 
   {{-- Salary --}}
   <div>
-    <x-input-label for="salary" :value="__('Monthly Salary')" />
+    <x-input-label for="salary_id" :value="__('Monthly Salary')" />
     <select
-      wire:model.blur="salary"
-      id="salary"
+      wire:model.blur="salary_id"
+      id="salary_id"
       class="border-gray-300 focus:border-indigo-400 focus:ring-indigo-400 rounded-md shadow-sm w-full"
     >
       <option value="">Choose Salary</option>
@@ -32,17 +32,17 @@
       @endforeach
     </select>
 
-    @error('salary')
+    @error('salary_id')
       <x-single-input-error :message="$message" />
     @enderror
   </div>
 
   {{-- Category --}}
   <div>
-    <x-input-label for="category" :value="__('Category')" />
+    <x-input-label for="category_id" :value="__('Category')" />
     <select
-      id="category"
-      wire:model.blur="category"
+      id="category_id"
+      wire:model.blur="category_id"
       class="border-gray-300 focus:border-indigo-400 focus:ring-indigo-400 rounded-md shadow-sm w-full"
     >
       <option value="">Choose Category</option>
@@ -52,7 +52,7 @@
     </select>
 
     {{-- <x-input-error :messages="$errors->get('category')" class="mt-2" /> --}}
-    @error('category')
+    @error('category_id')
       <x-single-input-error :message="$message" />
     @enderror
   </div>

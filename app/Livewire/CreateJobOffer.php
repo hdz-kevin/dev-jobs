@@ -2,11 +2,13 @@
 
 namespace App\Livewire;
 
-use App\Models\Category;
+use App\Models\JobOffer;
 use App\Models\Salary;
-use Livewire\Attributes\Validate;
+use App\Models\Category;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
 
 class CreateJobOffer extends Component
 {
@@ -14,10 +16,10 @@ class CreateJobOffer extends Component
     
     #[Validate('required|string')]
     public string $title;
-    #[Validate('required|string')]
-    public string $salary;
-    #[Validate('required|string')]
-    public string $category;
+    #[Validate('required|integer')]
+    public int $salary_id;
+    #[Validate('required|integer')]
+    public int $category_id;
     #[Validate('required|string')]
     public string $company;
     #[Validate('required|string')]
@@ -29,9 +31,26 @@ class CreateJobOffer extends Component
 
     public function __construct() { }
 
-    public function storeJobOffer()
+    /**
+     * Store a newly created job offer in the database.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store()
     {
         $data = $this->validate();
+
+        $image = $this->image->store('job-offers', 'public');
+        $imageName = Str::replace('job-offers/', '', $image);
+        $data['image'] = $imageName;
+
+        JobOffer::create([
+            ...$data, 'user_id' => auth()->id()
+        ]);
+
+        session()->flash('message', 'Job offer created successfully.');
+
+        return redirect()->route('job-offers.index');
     }
 
     public function render()
