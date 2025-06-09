@@ -17,4 +17,6 @@ class JobOffer extends Model
         'salary_id',
         'category_id',
     ];
+
+    protected $casts = ['due_date' => 'date'];
 }
