@@ -20,14 +20,15 @@
             Update
           </a>
 
-          <a href="#"
+          <button
+            wire:click="$dispatch('showAlert', { jobOfferId: {{ $jobOffer->id }} })"
             class="bg-red-600 text-white py-2 px-4 rounded-lg font-bold text-xs uppercase hover:bg-slate-700 transition-colors">
             Delete
-          </a>
+          </button>
         </div>
       </div>
     @empty
-      <p class="p-3 text-center text-sm text-gray-600">There are no job offers yet.</p>
+      <p class="p-3 text-center text-[18px] font-medium text-gray-600">There are no job offers yet.</p>
     @endforelse
   </div>
 
@@ -35,3 +36,33 @@
     {{ $jobOffers->links() }}
   </div>
 </div>
+
+@push('scripts')
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    document.addEventListener('livewire:initialized', () => {
+      Livewire.on('showAlert', ({ jobOfferId }) => {
+        Swal.fire({
+          title: "Delete Job Offer",
+          text: "This job offer will be permanently deleted.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Livewire.dispatch('deleteJobOffer', { jobOffer: jobOfferId });
+
+            Swal.fire({
+              title: "Deleted!",
+              text: "The job offer has been deleted.",
+              icon: "success"
+            });
+          }
+        });
+      });
+    });
+  </script>
+@endpush
