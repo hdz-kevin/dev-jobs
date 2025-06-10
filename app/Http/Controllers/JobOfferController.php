@@ -45,6 +45,8 @@ class JobOfferController extends Controller
      */
     public function edit(JobOffer $jobOffer)
     {
+        $this->authorize('update', $jobOffer);
+
         return view('job-offers.edit', compact('jobOffer'));
     }
 
