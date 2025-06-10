@@ -108,29 +108,29 @@
 
   {{-- Image --}}
   <div>
-    <x-input-label for="image" :value="__('Image')" />
+    <x-input-label for="new_image" :value="__('Image')" />
     <x-text-input 
-      id="image"
-      wire:model="image"
+      id="new_image"
+      wire:model="new_image"
       type="file"
       accept="image/*"
       class="block mt-1 w-full"
     />
 
-    <div class="my-5 w-96 space-y-2">
+    <div class="my-5 w-80 space-y-2">
       <x-input-label :value="__('Current Image:')" />
 
       <img src="{{ asset('storage/job-offers/'.$image) }}" alt="{{ $title.' image' }}">
     </div>
 
-    {{-- <div class="my-5 w-96">
-      @if ($image)
-        Image:
-        <img src="{{ $image->temporaryUrl() }}" alt="job offer image">
+    <div class="my-5 w-80 space-y-2">
+      @if ($new_image)
+        <x-input-label for="new_image" :value="__('New Image:')" />
+        <img src="{{ $new_image->temporaryUrl() }}" alt="job offer image">
       @endif
-    </div> --}}
+    </div>
 
-    @error('image')
+    @error('new_image')
       <x-single-input-error :message="$message" />
     @enderror
   </div>
