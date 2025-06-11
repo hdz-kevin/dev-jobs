@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\JobOffer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class JobOfferController extends Controller
 {
@@ -37,7 +36,7 @@ class JobOfferController extends Controller
      */
     public function show(JobOffer $jobOffer)
     {
-        //
+        return view('job-offers.show', compact('jobOffer'));
     }
 
     /**

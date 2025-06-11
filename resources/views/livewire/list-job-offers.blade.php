@@ -3,7 +3,7 @@
     @forelse ($jobOffers as $jobOffer)
       <div class="md:flex md:justify-between md:items-center p-6 text-gray-900 border-b border-gray-200">
         <div class="space-y-3">
-          <a href="#" class="text-xl font-bold">{{ $jobOffer->title }}</a>
+          <a href="{{ route('job-offers.show', $jobOffer) }}" class="text-xl font-bold">{{ $jobOffer->title }}</a>
           <p class="text-sm text-gray-600 font-bold">{{ $jobOffer->company }}</p>
           {{-- <p>{{ $jobOffer->due_date->format('d-m-Y') }}</p> --}}
           <p class="text-sm text-gray-500">Due date: {{ $jobOffer->due_date->format('Y-m-d') }}</p>
