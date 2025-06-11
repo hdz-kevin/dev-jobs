@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Models\JobOffer;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,8 @@ class JobOfferController extends Controller
      */
     public function index()
     {
+        abort_if(auth()->user()->role !== UserRole::RECRUITER, 403);
+
         return view('job-offers.index');
     }
 
@@ -20,6 +23,8 @@ class JobOfferController extends Controller
      */
     public function create()
     {
+        abort_if(auth()->user()->role !== UserRole::RECRUITER, 403);
+
         return view('job-offers.create');
     }
 
