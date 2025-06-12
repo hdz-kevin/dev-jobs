@@ -43,4 +43,8 @@
       </p>
     </div>
   @endguest
+
+  @if (auth()->user()?->role === \App\Enums\UserRole::DEVELOPER)
+    <livewire:apply-job-offer :jobOffer="$jobOffer" />
+  @endif
 </div>

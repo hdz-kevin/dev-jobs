@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\JobOffer;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -22,6 +23,19 @@ class JobOfferPolicy
     public function view(User $user, JobOffer $jobOffer): bool
     {
         return false;
+    }
+
+    /**
+     * Determine whether the user can apply for a job offer.
+     *
+     * @param User $user
+     * @param JobOffer $jobOffer
+     * @return boolean
+     */
+    public function apply(User $user, JobOffer $jobOffer): bool
+    {
+        return $user->role === UserRole::DEVELOPER && 
+                ! $user->appliedJobs()->where('job_offer_id', $jobOffer->id)->exists();
     }
 
     /**
