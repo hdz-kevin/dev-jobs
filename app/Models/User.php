@@ -49,4 +49,15 @@ class User extends Authenticatable implements MustVerifyEmail
             'role' => \App\Enums\UserRole::class,
         ];
     }
+
+    /**
+     * Get the job offers the user has applied for.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<JobOffer, $this>
+     */
+    public function appliedJobs()
+    {
+        return $this->belongsToMany(JobOffer::class, 'job_applications')
+                ->withTimestamps();
+    }
 }
