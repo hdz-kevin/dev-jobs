@@ -12,14 +12,16 @@
 
         <!-- Navigation Links for Authenticated Users -->
         @auth
-          <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-            <x-nav-link :href="route('job-offers.index')" :active="request()->routeIs('job-offers.index')">
-              {{ __('My Job Offers') }}
-            </x-nav-link>
-            <x-nav-link :href="route('job-offers.create')" :active="request()->routeIs('job-offers.create')">
-              {{ __('New Job Offer') }}
-            </x-nav-link>
-          </div>
+          @if (auth()->user()->role === \App\Enums\UserRole::RECRUITER)
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+              <x-nav-link :href="route('job-offers.index')" :active="request()->routeIs('job-offers.index')">
+                {{ __('My Job Offers') }}
+              </x-nav-link>
+              <x-nav-link :href="route('job-offers.create')" :active="request()->routeIs('job-offers.create')">
+                {{ __('New Job Offer') }}
+              </x-nav-link>
+            </div>
+          @endif
         @endauth
       </div>
 
@@ -100,29 +102,29 @@
   <!-- Responsive Navigation Menu -->
   <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
     @auth
-      <div class="pt-2 pb-3 space-y-1">
-        <x-responsive-nav-link :href="route('job-offers.index')" :active="request()->routeIs('job-offers.index')">
-          {{ __('My Job Offers') }}
-        </x-responsive-nav-link>
-        <x-responsive-nav-link :href="route('job-offers.create')" :active="request()->routeIs('job-offers.create')">
-          {{ __('New Job Offer') }}
-        </x-responsive-nav-link>
+      @if (auth()->user()->role === \App\Enums\UserRole::RECRUITER)
+        <div class="pt-2 pb-3 space-y-1">
+          <x-responsive-nav-link :href="route('job-offers.index')" :active="request()->routeIs('job-offers.index')">
+            My Job Offers
+          </x-responsive-nav-link>
+          <x-responsive-nav-link :href="route('job-offers.create')" :active="request()->routeIs('job-offers.create')">
+            New Job Offer
+          </x-responsive-nav-link>
 
-        @if (auth()->user()->role === \App\Enums\UserRole::RECRUITER)
           @php
             $notificationsCount = auth()->user()->unreadNotifications->count();
           @endphp
-        <a href="{{ route('notifications.index') }}" class="flex gap-2 items-center p-3">
-          <p class="w-7 h-7 bg-indigo-600 hover:bg-indigo-800 rounded-full flex flex-col justify-center items-center
-            text-sm font-extrabold text-white">
-            {{ $notificationsCount }}
-          </p>
-          <p class="text-base font-medium text-gray-600">
-            @choice('Notification|Notifications', $notificationsCount)
-          </p>
-        </a>
-        @endif
-      </div>
+          <a href="{{ route('notifications.index') }}" class="flex gap-2 items-center p-3">
+            <p class="w-7 h-7 bg-indigo-600 hover:bg-indigo-800 rounded-full flex flex-col justify-center items-center
+              text-sm font-extrabold text-white">
+              {{ $notificationsCount }}
+            </p>
+            <p class="text-base font-medium text-gray-600">
+              @choice('Notification|Notifications', $notificationsCount)
+            </p>
+          </a>
+        </div>
+      @endif
 
       <!-- Responsive Settings Options -->
       <div class="pt-4 pb-1 border-t border-gray-200">
