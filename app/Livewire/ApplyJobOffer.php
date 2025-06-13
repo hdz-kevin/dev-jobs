@@ -3,9 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\JobOffer;
+use App\Notifications\NewCandidate;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 class ApplyJobOffer extends Component
@@ -25,8 +25,14 @@ class ApplyJobOffer extends Component
         auth()->user()->appliedJobs()->attach($this->jobOffer->id, [
             'cv' => $cv,
         ]);
+        
+        $this
+            ->jobOffer
+            ->recruiter
+            ->notify(new NewCandidate($this->jobOffer->id, $this->jobOffer->title, auth()->id()));
 
         session()->flash('message', 'Application submitted successfully, good luck!');
+
         return redirect()->back();
     }
 

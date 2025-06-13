@@ -41,6 +41,16 @@ class JobOffer extends Model
     }
 
     /**
+     * Get the recruiter for the job offer.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User, $this>
+     */
+    public function recruiter()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
      * Get the candidates for the job offer.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User, $this>
