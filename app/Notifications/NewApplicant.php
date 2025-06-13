@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewCandidate extends Notification
+class NewApplicant extends Notification
 {
     use Queueable;
 
@@ -15,16 +15,16 @@ class NewCandidate extends Notification
 
     public string $job_offer_title;
 
-    public int $candidate_id;
+    public int $applicant_id;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(int $job_offer_id, string $job_offer_title, int $candidate_id)
+    public function __construct(int $job_offer_id, string $job_offer_title, int $applicant_id)
     {
         $this->job_offer_id = $job_offer_id;
         $this->job_offer_title = $job_offer_title;
-        $this->candidate_id = $candidate_id;
+        $this->applicant_id = $applicant_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class NewCandidate extends Notification
         $url = url(route('notifications.index'));
 
         return (new MailMessage)
-                    ->line('A new candidate has applied for your job offer.')
+                    ->line('There is a new applicant for your job offer.')
                     ->line('Job Offer: '.$this->job_offer_title)
                     ->action('View Notifications', $url)
                     ->line('Thank you for using DevJobs!');
@@ -65,7 +65,7 @@ class NewCandidate extends Notification
         return [
             'job_offer_id' => $this->job_offer_id,
             'job_offer_title' => $this->job_offer_title,
-            'candidate_id' => $this->candidate_id,
+            'applicant_id' => $this->applicant_id,
         ];
     }
 }

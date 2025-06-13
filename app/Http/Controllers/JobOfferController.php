@@ -29,6 +29,17 @@ class JobOfferController extends Controller
     }
 
     /**
+     * Display the applicants for a job offer.
+     *
+     * @param JobOffer $jobOffer
+     * @return \Illuminate\View\View
+     */
+    public function applicants(JobOffer $jobOffer)
+    {
+        return view('job-offers.applicants', compact('jobOffer'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)

@@ -11,27 +11,28 @@
         <div class="p-6 text-gray-900">
           <h1 class="text-2xl font-bold text-center my-8">My Notifications</h1>
 
-          @forelse ($notifications as $notification)
-            <div class="lg:flex lg:justify-between lg:items-center border-b border-gray-200 py-4 space-y-1">
-              <div>
-                <p class="">
-                  New candidate for: 
-                  <span class="font-semibold">{{ $notification->data['job_offer_title'] }}</span>
-                </p>
-                <p class="text-sm text-gray-600 font-medium">
-                  {{ $notification->created_at->diffForHumans() }}
-                </p>
+          <div class="divide-y divide-gray-200">
+            @forelse ($notifications as $notification)
+              <div class="lg:flex lg:justify-between lg:items-center py-4 space-y-1">
+                <div>
+                  <p class="">
+                    New applicant for: 
+                    <span class="font-semibold">{{ $notification->data['job_offer_title'] }}</span>
+                  </p>
+                  <p class="text-sm text-gray-600 font-medium">
+                    {{ $notification->created_at->diffForHumans() }}
+                  </p>
+                </div>
+                <div>
+                  <a href="{{ route('job-offers.applicants', $notification->data['job_offer_id']) }}" class="bg-indigo-500 inline-block text-white p-3 text-sm uppercase font-bold rounded-lg">
+                    See Applicants
+                  </a>
+                </div>
               </div>
-              <div>
-                <a href="#" class="bg-indigo-500 inline-block text-white p-3 text-sm uppercase font-bold rounded-lg">
-                  See Candidate
-                </a>
-              </div>
-            </div>
-          @empty
-            <p class="text-center text-gray-600">No new notifications</p>
-          @endforelse
-
+            @empty
+              <p class="text-center text-gray-600">No new notifications</p>
+            @endforelse
+          </div>
         </div>
       </div>
     </div>

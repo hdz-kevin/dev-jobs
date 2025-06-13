@@ -58,6 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function appliedJobs()
     {
         return $this->belongsToMany(JobOffer::class, 'job_applications')
+                ->withPivot('cv')
                 ->withTimestamps();
     }
 }

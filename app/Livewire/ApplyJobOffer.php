@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\JobOffer;
-use App\Notifications\NewCandidate;
+use App\Notifications\NewApplicant;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -29,7 +29,7 @@ class ApplyJobOffer extends Component
         $this
             ->jobOffer
             ->recruiter
-            ->notify(new NewCandidate($this->jobOffer->id, $this->jobOffer->title, auth()->id()));
+            ->notify(new NewApplicant($this->jobOffer->id, $this->jobOffer->title, auth()->id()));
 
         session()->flash('message', 'Application submitted successfully, good luck!');
 

@@ -10,9 +10,9 @@
         </div>
 
         <div class="flex gap-3 items-center justify-start mt-5 md:mt-0">
-          <a href="#"
+          <a href="{{ route('job-offers.applicants', $jobOffer) }}"
             class="bg-slate-800 text-white py-2 px-4 rounded-lg font-bold text-xs uppercase hover:bg-slate-700 transition-colors">
-            Candidates
+            {{ $jobOffer->applicants->count() }} @choice('Applicant|Applicants', $jobOffer->applicants->count())
           </a>
 
           <a href="{{ route('job-offers.edit', $jobOffer) }}"

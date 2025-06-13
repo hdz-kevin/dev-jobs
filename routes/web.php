@@ -15,6 +15,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [JobOfferController::class, 'index'])->middleware('role.recruiter')->name('job-offers.index');
     Route::get('/job-offers/create', [JobOfferController::class, 'create'])->name('job-offers.create');
     Route::get('/job-offers/{jobOffer}/edit', [JobOfferController::class, 'edit'])->name('job-offers.edit');
+    Route::get('/job-offers/{jobOffer}/applicants', [JobOfferController::class, 'applicants'])
+            ->middleware('role.recruiter')
+            ->name('job-offers.applicants');
 
     Route::get('/notifications', NotificationController::class)->middleware('role.recruiter')->name('notifications.index');
 });

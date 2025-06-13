@@ -51,13 +51,15 @@ class JobOffer extends Model
     }
 
     /**
-     * Get the candidates for the job offer.
+     * Get the applicants for the job offer.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User, $this>
      */
-    public function candidates()
+    public function applicants()
     {
         return $this->belongsToMany(User::class, 'job_applications')
-                    ->withTimestamps();
+                ->withPivot('cv')
+                ->withTimestamps()
+                ->orderBy('job_applications.created_at', 'desc');
     }
 }
