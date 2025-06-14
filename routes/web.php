@@ -8,18 +8,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn () => view('home'))->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', [ProfileController::class, 'edit'])->name('edit');
+        Route::patch('/', [ProfileController::class, 'update'])->name('update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+    });
 
-    Route::get('/dashboard', [JobOfferController::class, 'index'])->middleware('role.recruiter')->name('job-offers.index');
-    Route::get('/job-offers/create', [JobOfferController::class, 'create'])->name('job-offers.create');
-    Route::get('/job-offers/{jobOffer}/edit', [JobOfferController::class, 'edit'])->name('job-offers.edit');
-    Route::get('/job-offers/{jobOffer}/applicants', [JobOfferController::class, 'applicants'])
-            ->middleware('role.recruiter')
-            ->name('job-offers.applicants');
-
-    Route::get('/notifications', NotificationController::class)->middleware('role.recruiter')->name('notifications.index');
+    Route::middleware('role.recruiter')->group(function () {
+        Route::get('/dashboard', [JobOfferController::class, 'index'])->name('job-offers.index');
+        Route::get('/job-offers/create', [JobOfferController::class, 'create'])->name('job-offers.create');
+        Route::get('/job-offers/{jobOffer}/edit', [JobOfferController::class, 'edit'])->name('job-offers.edit');
+        Route::get('/job-offers/{jobOffer}/applicants', [JobOfferController::class, 'applicants'])->name('job-offers.applicants');
+        Route::get('/notifications', NotificationController::class)->name('notifications.index');
+    });
 });
 
 Route::get('/job-offers/{jobOffer}', [JobOfferController::class, 'show'])->name('job-offers.show');
