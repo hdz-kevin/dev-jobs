@@ -1,8 +1,9 @@
 <div>
+
+  <livewire:job-offer-filter-form />
+
   <div class="py-12">
     <div class="max-w-7xl mx-auto">
-      <h3 class="font-extrabold text-3xl text-gray-700 mb-10">Latest Job Offers</h3>
-
       <div class="bg-white shadow-sm rounded-lg p-6 divide-y divide-gray-200">
         @forelse ($jobOffers as $jobOffer)
           <div class="md:flex md:justify-between md:items-center py-5">
@@ -13,11 +14,12 @@
               >
                 {{ $jobOffer->title }}
               </a>
-              <p class="text-base text-gray-500">{{ $jobOffer->company }}</p>
-              <p class="font-medium text-gray-500">
+              <p class="text-base text-gray-600">{{ $jobOffer->company }}</p>
+              <p class="font-normal text-gray-600">
                 Due date to apply:
-                <span class="font-normal">{{ $jobOffer->due_date->format('d M Y') }}</span>
+                <span class="font-medium">{{ $jobOffer->due_date->format('d M Y') }}</span>
               </p>
+              <p class="text-base font-medium text-gray-600 mt-1">{{ $jobOffer->salary->salary }}</p>
             </div>
             <div class="">
               <a
